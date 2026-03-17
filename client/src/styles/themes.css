@@ -1,0 +1,307 @@
+@layer base {
+  :root {
+    /* Default fallbacks if no data-theme is set, we assume dark to match current */
+    --theme-bg-base: #09090b;
+    /* zinc-950 */
+    --theme-bg-panel: #18181b;
+    /* zinc-900 */
+    --theme-bg-panel-hover: #27272a;
+    /* zinc-800 hover */
+    --theme-border: #27272a;
+    /* zinc-800 */
+    --theme-border-hover: #3f3f46;
+    /* zinc-700 */
+
+    --theme-text-base: #ffffff;
+    /* white */
+    --theme-text-muted: #a1a1aa;
+    /* zinc-400 */
+    --theme-text-inverse: #000000;
+
+    --theme-btn-primary: #16a34a;
+    /* green-600 */
+    --theme-btn-primary-hover: #15803d;
+    /* green-700 */
+
+    --theme-btn-secondary: #27272a;
+    /* zinc-800 */
+    --theme-btn-secondary-hover: #3f3f46;
+    /* zinc-700 */
+
+    --theme-panel-shadow: none;
+    --theme-bg-grid: none;
+
+    --theme-btn-bg-hover: #27272a;
+    /* zinc-800 */
+    --theme-btn-bg-active: #3f3f46;
+    /* zinc-700 */
+  }
+
+  [data-theme="light"] {
+    --theme-bg-base: #e4e4e7;
+    /* zinc-200 base for higher contrast */
+    --theme-bg-panel: #ffffff;
+    /* pure white panels */
+    --theme-bg-panel-hover: #f4f4f5;
+    /* zinc-100 hover */
+    --theme-border: #a1a1aa;
+    /* zinc-400 borders */
+    --theme-border-hover: #71717a;
+    /* zinc-500 */
+
+    --theme-text-base: #18181b;
+    /* zinc-900 */
+    --theme-text-muted: #52525b;
+    /* zinc-600 */
+    --theme-text-inverse: #ffffff;
+
+    --theme-btn-primary: #16a34a;
+    /* green-600 */
+    --theme-btn-primary-hover: #15803d;
+    /* green-700 */
+
+    --theme-btn-secondary: #e4e4e7;
+    /* zinc-200 */
+    --theme-btn-secondary-hover: #d4d4d8;
+    /* zinc-300 */
+
+    --theme-panel-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --theme-bg-grid: none;
+
+    --theme-btn-bg-hover: #b3b3c196;
+    /* zinc-200 (visible grey against white) */
+    --theme-btn-bg-active: #b3b3c196;
+    /* zinc-300 (darker active grey) */
+  }
+
+  [data-theme="dark"] {
+    --theme-bg-base: #09090b;
+    /* zinc-950 */
+    --theme-bg-panel: #18181b;
+    /* zinc-900 */
+    --theme-bg-panel-hover: #27272a;
+    /* zinc-800 hover */
+    --theme-border: #27272a;
+    /* zinc-800 */
+    --theme-border-hover: #3f3f46;
+    /* zinc-700 */
+
+    --theme-text-base: #ffffff;
+    /* white */
+    --theme-text-muted: #a1a1aa;
+    /* zinc-400 */
+    --theme-text-inverse: #000000;
+
+    --theme-btn-primary: #16a34a;
+    /* green-600 */
+    --theme-btn-primary-hover: #15803d;
+    /* green-700 */
+
+    --theme-btn-secondary: #27272a;
+    /* zinc-800 */
+    --theme-btn-secondary-hover: #3f3f46;
+    /* zinc-700 */
+
+    --theme-panel-shadow: none;
+    --theme-bg-grid: none;
+
+    --theme-btn-bg-hover: #27272a;
+    /* zinc-800 */
+    --theme-btn-bg-active: #27272a;
+    /* zinc-800 (dark gray) */
+  }
+
+  [data-theme="modern"] {
+    --theme-bg-base: #0b0b12;
+    /* deep midnight */
+    --theme-bg-panel: #111122;
+    /* slightly lighter deep blue */
+    --theme-bg-panel-hover: #1a1a33;
+    /* hover state */
+    --theme-border: rgba(168, 85, 247, 0.3);
+    /* violet-500/30 */
+    --theme-border-hover: rgba(236, 72, 153, 0.5);
+    /* pink-500/50 */
+
+    --theme-text-base: #f8fafc;
+    /* slate-50 */
+    --theme-text-muted: #94a3b8;
+    /* slate-400 */
+    --theme-text-inverse: #ffffff;
+
+    /* Buttons will use gradients directly via Tailwind classes, but we can provide fallbacks if needed */
+    --theme-btn-primary: #a855f7;
+    /* violet-500 fallback */
+    --theme-btn-primary-hover: #c084fc;
+    /* violet-400 fallback */
+
+    --theme-btn-secondary: #1e1e3f;
+    /* neon secondary */
+    --theme-btn-secondary-hover: #2d2d5e;
+
+    --theme-panel-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+    /* violet glow */
+    --theme-bg-grid: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+
+    --theme-btn-bg-hover: #1a1a33;
+    --theme-btn-bg-active: #2d2d5e;
+  }
+}
+
+/* Tailwind utility mappings for semantic classes */
+@layer utilities {
+  .theme-bg-base {
+    background-color: var(--theme-bg-base);
+  }
+
+  .theme-bg-grid {
+    background-image: var(--theme-bg-grid);
+    background-size: 32px 32px;
+  }
+
+  .theme-bg-panel {
+    background-color: var(--theme-bg-panel);
+    box-shadow: var(--theme-panel-shadow);
+  }
+
+  .theme-bg-panel-hover:hover {
+    background-color: var(--theme-bg-panel-hover);
+  }
+
+  .theme-border {
+    border-color: var(--theme-border);
+  }
+
+  .theme-border-hover:hover {
+    border-color: var(--theme-border-hover);
+  }
+
+  .theme-text-base {
+    color: var(--theme-text-base);
+  }
+
+  .theme-text-muted {
+    color: var(--theme-text-muted);
+  }
+
+  .theme-text-inverse {
+    color: var(--theme-text-inverse);
+  }
+
+  .theme-btn-primary {
+    background-color: var(--theme-btn-primary);
+    color: var(--theme-text-inverse);
+  }
+
+  .theme-btn-primary:hover {
+    background-color: var(--theme-btn-primary-hover);
+  }
+
+  .theme-btn-secondary:hover {
+    background-color: var(--theme-btn-secondary-hover);
+  }
+
+  .theme-toolbar-btn {
+    background-color: transparent;
+  }
+
+  .theme-toolbar-btn:hover {
+    background-color: var(--theme-btn-bg-hover);
+  }
+
+  .theme-btn-active {
+    background-color: var(--theme-btn-bg-active);
+    color: var(--theme-text-base);
+  }
+}
+
+/* Specific Modern Theme overrides */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes neon-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.2), inset 0 0 10px rgba(168, 85, 247, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.4), inset 0 0 15px rgba(236, 72, 153, 0.2);
+  }
+}
+
+[data-theme="modern"] .modern-gradient-btn {
+  background: linear-gradient(270deg, #ec4899, #a855f7, #06b6d4, #ec4899);
+  background-size: 300% 300%;
+  animation: gradient-shift 4s ease infinite;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+[data-theme="modern"] .modern-gradient-btn:hover {
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
+  transform: scale(1.02);
+}
+
+[data-theme="modern"] .modern-glow-border {
+  border-color: rgba(168, 85, 247, 0.4);
+  animation: neon-pulse 3s infinite alternate;
+}
+
+/* General overrides to normalize inputs across themes */
+input,
+textarea {
+  color: inherit;
+}
+
+/* TipTap Editor ProseMirror theme adjustments */
+.ProseMirror {
+  outline: none;
+  min-height: 300px;
+  color: var(--theme-text-base);
+}
+
+.ProseMirror p,
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror ul,
+.ProseMirror ol,
+.ProseMirror li {
+  color: var(--theme-text-base);
+}
+
+[data-theme="modern"] .ProseMirror {
+  caret-color: #06b6d4;
+  /* cyan glowing caret */
+}
+
+[data-theme="modern"] .ProseMirror p,
+[data-theme="modern"] .ProseMirror h1,
+[data-theme="modern"] .ProseMirror h2,
+[data-theme="modern"] .ProseMirror ul,
+[data-theme="modern"] .ProseMirror ol,
+[data-theme="modern"] .ProseMirror li {
+  text-shadow: 0 0 2px rgba(168, 85, 247, 0.3);
+  /* Subtle glowing text effect */
+}
+
+/* Glowing Collaborative Cursor for Modern Theme */
+[data-theme="modern"] .collaborative-cursor {
+  box-shadow: 0 0 8px currentColor;
+  text-shadow: 0 0 4px currentColor;
+  border-radius: 4px;
+}
