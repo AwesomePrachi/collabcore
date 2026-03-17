@@ -17,7 +17,9 @@ export const requireAuth = (req: AuthRequest, res: Response, next: NextFunction)
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallback_secret") as { userId: string, email: string }
+    const jwtSecret = process.env.JWT_SECRET
+    if (!jwtSecret) throw new Error("JWT_SECRET is not defined")
+    const decoded = jwt.verify(token, jwtSecret) as { userId: string, email: string }
     req.user = decoded
     next()
   } catch (error) {
