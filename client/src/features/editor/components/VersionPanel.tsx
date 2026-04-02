@@ -7,6 +7,7 @@ type Version = {
   _id: string
   content: JSONContent
   createdAt: string
+  updatedAt?: string
 }
 
 type Props = {
@@ -89,7 +90,7 @@ export default function VersionPanel({
             className="flex items-center justify-between gap-2 text-xs theme-text-muted theme-bg-panel border theme-border rounded-lg px-2 py-2"
           >
             <span>
-              {new Date(v.createdAt).toLocaleString()}
+              {new Date(v.updatedAt || v.createdAt).toLocaleString()}
             </span>
             <button
               onClick={() => handleRestore(v._id)}

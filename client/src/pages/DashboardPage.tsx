@@ -59,10 +59,10 @@ export default function DashboardPage() {
 
     try {
       await api.delete(`/documents/${documentToDelete}`)
-      
+
       // Update local state to remove the document immediately
       setDocuments(docs => docs.filter(doc => doc.publicId !== documentToDelete))
-      
+
       // Close modal
       setDocumentToDelete(null)
     } catch (error) {
@@ -94,7 +94,7 @@ export default function DashboardPage() {
 
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6 mb-12">
-          
+
           <div className="flex items-center gap-4">
             <div className="p-3 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl shadow-lg shadow-violet-500/20 text-white">
               <LayoutDashboard size={28} />
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                 onClick={() => navigate(`/doc/${doc.publicId}`)}
                 className="group relative flex flex-col p-6 theme-bg-panel theme-border border rounded-2xl hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgb(0,0,0,0.15)] transition-all duration-300 cursor-pointer overflow-hidden"
               >
-                
+
                 {/* Decorative Top Gradient */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -224,12 +224,12 @@ export default function DashboardPage() {
             <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-5 border border-red-500/20">
               <Trash2 className="text-red-500" size={24} />
             </div>
-            
+
             <h3 className="text-xl font-bold mb-3 theme-text-base">Delete Document</h3>
             <p className="theme-text-muted text-base mb-8 leading-relaxed">
               Are you sure you want to delete this document permanently? This action cannot be undone.
             </p>
-            
+
             <div className="flex justify-end gap-3 sm:gap-4">
               <button
                 onClick={() => setDocumentToDelete(null)}

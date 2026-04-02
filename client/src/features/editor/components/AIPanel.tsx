@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { api } from "@/lib/api"
+import ReactMarkdown from "react-markdown"
 
 type Props = {
   getContent: () => string
@@ -11,40 +12,36 @@ export default function AIPanel({ getContent }: Props) {
   const [loading, setLoading] = useState(false)
 
   async function summarize() {
-
     setLoading(true)
-
-    const content = getContent()
-
-    const res = await api.post("/ai/summarize", {
-      content
-    })
-
-    setResult(res.data.result)
-
-    setLoading(false)
-
+    try {
+      const content = getContent()
+      const res = await api.post("/ai/summarize", { content })
+      setResult(res.data.result)
+    } catch (error) {
+      console.error("Summarize error:", error)
+      setResult("Error generating response. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function improve() {
-
     setLoading(true)
-
-    const content = getContent()
-
-    const res = await api.post("/ai/improve", {
-      content
-    })
-
-    setResult(res.data.result)
-
-    setLoading(false)
-
+    try {
+      const content = getContent()
+      const res = await api.post("/ai/improve", { content })
+      setResult(res.data.result)
+    } catch (error) {
+      console.error("Improve error:", error)
+      setResult("Error generating response. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
 
-    <div className="w-72 border-l theme-border p-4 flex flex-col gap-4 theme-bg-base transition-colors duration-300">
+    <div className="w-full p-4 flex flex-col gap-4 theme-bg-base transition-colors duration-300">
 
       <h2 className="font-semibold theme-text-base">
         AI Assistant
@@ -71,8 +68,10 @@ export default function AIPanel({ getContent }: Props) {
       )}
 
       {result && (
-        <div className="text-sm theme-bg-panel p-3 rounded theme-text-base border theme-border">
-          {result}
+        <div className="theme-bg-panel p-3 rounded border theme-border max-h-80 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
+          <ReactMarkdown>
+            {result}
+          </ReactMarkdown>
         </div>
       )}
 
