@@ -68,7 +68,7 @@ export default function AIPanel({ getContent }: Props) {
       )}
 
       {result && (
-        <div className="theme-bg-panel p-3 rounded border theme-border max-h-80 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
+        <div className="theme-bg-panel p-3 rounded border theme-border prose prose-sm dark:prose-invert max-w-none">
           <ReactMarkdown>
             {result}
           </ReactMarkdown>

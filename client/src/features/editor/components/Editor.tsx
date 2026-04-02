@@ -39,7 +39,7 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
     content: "<p>Loading...</p>",
     editorProps: {
       attributes: {
-        class: "prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none max-w-none",
+        class: "prose dark:prose-invert m-5 focus:outline-none max-w-none",
       },
     },
   })
@@ -126,13 +126,11 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
       </div>
 
       {/* Right Sidebar */}
-      <div className="flex flex-col border-l theme-border w-[350px]">
-        <div className="flex-1 overflow-y-auto">
-          <CommentPanel documentId={documentId} editor={editor} />
-          <ActivityPanel documentId={documentId} />
-          <VersionPanel documentId={documentId} editor={editor} />
-        </div>
-        <div className="border-t theme-border pt-2 pb-2">
+      <div className="border-l theme-border w-[350px] overflow-y-auto pb-4">
+        <CommentPanel documentId={documentId} editor={editor} />
+        <ActivityPanel documentId={documentId} />
+        <VersionPanel documentId={documentId} editor={editor} />
+        <div className="border-t theme-border mt-2 pt-2">
           <AIPanel getContent={getEditorContent} />
         </div>
       </div>
