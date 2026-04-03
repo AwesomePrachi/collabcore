@@ -197,6 +197,10 @@
     background-color: var(--theme-btn-primary-hover);
   }
 
+  .theme-btn-secondary {
+    background-color: var(--theme-btn-secondary);
+  }
+
   .theme-btn-secondary:hover {
     background-color: var(--theme-btn-secondary-hover);
   }
