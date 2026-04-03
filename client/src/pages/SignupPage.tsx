@@ -100,7 +100,7 @@ export default function SignupPage() {
             <div className="w-full max-w-md theme-bg-panel theme-border border rounded-3xl p-8 shadow-2xl shadow-black/20 backdrop-blur">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-extrabold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent">
                     Create account
                   </h2>
                   <p className="theme-text-muted mt-1 font-medium">Start collaborating in CollabCore</p>
