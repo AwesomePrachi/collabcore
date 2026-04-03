@@ -25,8 +25,10 @@ It enables multiple users to **edit documents simultaneously**, track activity, 
 Unlike basic editors, CollabCore implements a **complete collaborative system**:
 
 * **Event-driven architecture** using Socket.IO
-* **Conflict-free real-time updates**
-* **Smart identity system** (unique user names + colors)
+* **Instant real-time updates via Socket.IO**
+* **Smart identity system** (Seamless syncing of registered accounts & frictionless Guest Mode)
+* **Product-Led Growth (PLG)** (Allows external guests to test-drive features instantly)
+* **Mobile-Responsive Editor** (Slide-out drawer menus for right-side panels)
 * **Efficient auto-save (only on changes)**
 * **AI integration for content transformation**
 * **Production-level modular architecture**
@@ -166,6 +168,7 @@ Tracks user actions like:
 ### 🔗 Document Sharing
 
 * Share via public link
+* Frictionless Guest Mode (Collaborators can join with a temporary name without registering)
 * Instant access for collaborators
 * Clipboard copy support
 
@@ -183,18 +186,20 @@ Themes persist using localStorage.
 
 ## 🗺️ System Architecture
 
-```
-Client (React + TipTap)
+```text
+Client (React + TipTap + Zustand)
         │
         ▼
-Socket.IO Client
+Socket.IO (Live Sync) & Axios (REST APIs)
         │
         ▼
 Node.js Server (Express + Socket.IO)
         │
- ┌──────┼──────────┐
- ▼      ▼          ▼
-MongoDB  AI API   Version Store
+  ┌─────┴─────────────┐
+  ▼                   ▼
+MongoDB (Mongoose)  Groq API
+(Users, Docs,       (LLaMA 3.1)
+ History)
 ```
 
 ---
@@ -232,7 +237,7 @@ Create `.env`:
 PORT=5000
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_secret
-OPENAI_API_KEY=your_api_key
+GROQ_API_KEY=your_api_key
 ```
 
 Run:
@@ -259,7 +264,7 @@ npm run dev
 | -------------- | ------------------ |
 | MONGO_URI      | MongoDB connection |
 | JWT_SECRET     | JWT signing key    |
-| OPENAI_API_KEY | AI integration     |
+| GROQ_API_KEY   | Groq AI integration|
 
 ---
 
