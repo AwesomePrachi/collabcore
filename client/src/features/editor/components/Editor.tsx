@@ -4,7 +4,8 @@ import Underline from "@tiptap/extension-underline"
 import { CustomBulletList } from "../extensions/CustomBulletList"
 import { CustomOrderedList } from "../extensions/CustomOrderedList"
 import { CommentExtension } from "../extensions/CommentExtension"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { Menu, X } from "lucide-react"
 
 import { api } from "@/lib/api"
 
@@ -24,6 +25,7 @@ type Props = {
 }
 
 export default function Editor({ documentId, onChangeTitle }: Props) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const editor = useEditor({
     extensions: [
@@ -86,9 +88,17 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
       <div className="flex-1 flex flex-col overflow-hidden relative">
 
         {/* Static Toolbar Area */}
-        <div className="w-full shrink-0 px-6 pt-6 pb-2">
-          <div className="max-w-3xl mx-auto">
-            <EditorToolbar editor={editor} />
+        <div className="w-full shrink-0 px-4 md:px-6 pt-4 md:pt-6 pb-2">
+          <div className="max-w-3xl mx-auto flex items-center justify-between gap-2">
+            <div className="flex-1 overflow-x-auto no-scrollbar">
+              <EditorToolbar editor={editor} />
+            </div>
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="xl:hidden p-2 mb-3 rounded border theme-border theme-bg-panel hover:theme-bg-panel-hover"
+            >
+              <Menu size={20} className="theme-text-base" />
+            </button>
           </div>
         </div>
 
@@ -125,13 +135,33 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
 
       </div>
 
+      {/* Mobile Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 xl:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Right Sidebar */}
-      <div className="border-l theme-border w-[350px] overflow-y-auto pb-4">
-        <CommentPanel documentId={documentId} editor={editor} />
-        <ActivityPanel documentId={documentId} />
-        <VersionPanel documentId={documentId} editor={editor} />
-        <div className="border-t theme-border mt-2 pt-2">
-          <AIPanel getContent={getEditorContent} />
+      <div className={`
+        fixed inset-y-0 right-0 z-50 w-80 shadow-2xl transform transition-transform duration-300 theme-bg-base flex flex-col
+        xl:relative xl:w-[350px] xl:translate-x-0 xl:shadow-none xl:border-l xl:theme-border xl:bg-transparent
+        ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
+      `}>
+        <div className="flex items-center justify-between p-4 border-b theme-border xl:hidden bg-background theme-bg-panel">
+          <span className="font-semibold text-lg">Menu</span>
+          <button onClick={() => setIsSidebarOpen(false)} className="p-1 rounded hover:theme-bg-panel-hover">
+            <X size={20} className="theme-text-base" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto pb-4">
+          <CommentPanel documentId={documentId} editor={editor} />
+          <ActivityPanel documentId={documentId} />
+          <VersionPanel documentId={documentId} editor={editor} />
+          <div className="border-t theme-border mt-2 pt-2">
+            <AIPanel getContent={getEditorContent} />
+          </div>
         </div>
       </div>
 
