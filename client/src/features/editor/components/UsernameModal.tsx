@@ -22,7 +22,7 @@ export default function UsernameModal({ onSubmit }: Props) {
 
                 <div className="flex items-center justify-between mb-2">
                     <h2 className="text-xl font-extrabold theme-text-base">
-                        Choose your username
+                        Join as a Guest
                     </h2>
                     <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center border theme-border">
                         <User size={18} />
@@ -30,7 +30,7 @@ export default function UsernameModal({ onSubmit }: Props) {
                 </div>
 
                 <p className="theme-text-muted text-sm font-medium mb-6">
-                    This name will be shown to others during collaboration.
+                    Please provide a temporary display name so others can identify you during this session.
                 </p>
 
                 <input

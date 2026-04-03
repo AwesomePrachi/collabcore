@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { nanoid } from "nanoid"
+import { useAuthStore } from "@/store/authStore"
 
 export type UserIdentity = {
   id: string
@@ -36,7 +37,9 @@ function createBaseIdentity() {
 }
 
 export function useUserIdentity() {
-  const [identity, setIdentity] = useState<UserIdentity>(() => {
+  const authUser = useAuthStore((state) => state.user)
+
+  const [localIdentity, setLocalIdentity] = useState<UserIdentity>(() => {
     const stored = safeParse<UserIdentity>(localStorage.getItem(STORAGE_KEY))
     return stored ?? createBaseIdentity()
   })
@@ -46,19 +49,38 @@ export function useUserIdentity() {
     const onStorage = (e: StorageEvent) => {
       if (e.key !== STORAGE_KEY) return
       const next = safeParse<UserIdentity>(e.newValue)
-      if (next) setIdentity(next)
+      if (next) setLocalIdentity(next)
     }
     window.addEventListener("storage", onStorage)
     return () => window.removeEventListener("storage", onStorage)
   }, [])
 
+  const identity = useMemo(() => {
+    if (authUser) {
+      // Deterministically pick a color based on the actual userId
+      let charSum = 0
+      for (let i = 0; i < (authUser.userId || "").length; i++) {
+        charSum += authUser.userId.charCodeAt(i)
+      }
+      return {
+        id: authUser.userId,
+        name: authUser.name,
+        color: colors[charSum % colors.length]
+      } satisfies UserIdentity
+    }
+    return localIdentity
+  }, [authUser, localIdentity])
+
   const setUsername = useCallback((name: string) => {
     const trimmed = name.trim()
     if (!trimmed) return
-    const next: UserIdentity = { ...identity, name: trimmed }
+    
+    // Only saves anonymous identity to local storage.
+    // Real authenticated user names should be managed in profile settings.
+    const next: UserIdentity = { ...localIdentity, name: trimmed }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-    setIdentity(next)
-  }, [identity])
+    setLocalIdentity(next)
+  }, [localIdentity])
 
   const hasUsername = useMemo(() => Boolean(identity.name?.trim()), [identity.name])
 
