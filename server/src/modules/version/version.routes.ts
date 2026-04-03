@@ -8,12 +8,7 @@ import { getDocumentByPublicId, updateDocumentForOwner } from "../document/docum
 
 const router = Router()
 
-router.get("/:publicId", requireAuth as any, async (req: AuthRequest, res) => {
-
-  if (!req.user?.userId) {
-    return res.status(401).json({ message: "Unauthorized" })
-  }
-
+router.get("/:publicId", async (req, res) => {
   const publicIdParam = req.params.publicId
   const publicId = Array.isArray(publicIdParam) ? publicIdParam[0] : publicIdParam
   if (!publicId) return res.status(400).json({ message: "Invalid document id" })

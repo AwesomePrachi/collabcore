@@ -62,12 +62,12 @@ export default function SignupPage() {
 
             <div className="relative">
               <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold theme-bg-base/40 border theme-border">
-                <Sparkles size={14} className="text-cyan-200" />
+                <Sparkles size={14} className="text-cyan-600 dark:text-cyan-200" />
                 Create your workspace
               </div>
               <h1 className="mt-5 text-4xl font-extrabold leading-tight">
                 Build documents{" "}
-                <span className="bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent">
                   together
                 </span>
               </h1>
@@ -100,12 +100,12 @@ export default function SignupPage() {
             <div className="w-full max-w-md theme-bg-panel theme-border border rounded-3xl p-8 shadow-2xl shadow-black/20 backdrop-blur">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent">
                     Create account
                   </h2>
                   <p className="theme-text-muted mt-1 font-medium">Start collaborating in CollabCore</p>
                 </div>
-                <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
+                <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-cyan-600 dark:from-emerald-500 dark:to-cyan-500 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
                   <ArrowRight size={18} className="text-white" />
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full px-6 py-3 rounded-2xl font-semibold shadow-lg transition-all disabled:opacity-60 disabled:hover:translate-y-0 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
+                  className="w-full px-6 py-3 rounded-2xl font-semibold shadow-lg transition-all disabled:opacity-60 disabled:hover:translate-y-0 bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-500 dark:to-cyan-500 hover:from-emerald-500 hover:to-cyan-500 dark:hover:from-emerald-400 dark:hover:to-cyan-400 text-white shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
                 >
                   <span className="inline-flex items-center justify-center gap-2">
                     {isSubmitting ? "Creating..." : "Create account"}
@@ -179,7 +179,7 @@ export default function SignupPage() {
 
               <p className="mt-6 text-sm theme-text-muted font-medium">
                 Already have an account?{" "}
-                <Link to="/login" className="text-emerald-300 hover:text-emerald-200 font-bold">
+                <Link to="/login" className="text-emerald-600 hover:text-emerald-500 dark:text-emerald-300 dark:hover:text-emerald-200 font-bold">
                   Sign in
                 </Link>
               </p>

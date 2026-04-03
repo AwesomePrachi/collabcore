@@ -186,13 +186,13 @@ export default function DashboardPage() {
                     <FileText size={24} strokeWidth={2} />
                   </div>
 
-                  {/* Delete Button (visible on hover) */}
+                  {/* Delete Button (always visible on mobile, visible on hover for desktop) */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation() // Prevent navigating to the document
                       setDocumentToDelete(doc.publicId)
                     }}
-                    className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 text-red-500 hover:bg-red-500/15 hover:text-red-600 rounded-lg scale-90 group-hover:scale-100"
+                    className="opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 text-red-500 hover:bg-red-500/15 hover:text-red-600 rounded-lg md:scale-90 group-hover:scale-100"
                     title="Delete Document"
                   >
                     <Trash2 size={20} />
