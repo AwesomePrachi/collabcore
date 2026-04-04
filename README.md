@@ -130,8 +130,8 @@ Keyboard shortcuts supported (Ctrl+B, Ctrl+I, etc.)
 
 ### 🕒 Version History
 
-* Snapshot created on every save
-* View previous versions
+* Snapshots intelligently grouped in 30-minute intervals (avoids DB spamming)
+* Clean timeline to view previous states
 * Restore any version instantly
 
 ---
