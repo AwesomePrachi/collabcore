@@ -4,7 +4,7 @@ import Underline from "@tiptap/extension-underline"
 import { CustomBulletList } from "../extensions/CustomBulletList"
 import { CustomOrderedList } from "../extensions/CustomOrderedList"
 import { CommentExtension } from "../extensions/CommentExtension"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Menu, X } from "lucide-react"
 
 import { api } from "@/lib/api"
@@ -49,9 +49,35 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
   useEditorSocket(editor, documentId)
 
   const cursors = useCursorStore((s) => s.cursors)
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   function getEditorContent() {
     return editor?.getText() || ""
+  }
+
+  // MATH LOGIC: Calculate physical pixel coordinates for the text cursor position
+  function getCursorCoordinates(position: number) {
+    if (!editor || !wrapperRef.current) return null
+    try {
+      // 1. Safety check: Ensure position doesn't exceed document bounds
+      const docSize = editor.state.doc.content.size
+      if (position < 0 || position > docSize) return null
+
+      // 2. Ask TipTap "What are the exact screen pixels for this character?"
+      const coords = editor.view.coordsAtPos(position)
+      
+      // 3. Get the bounding box of our paper (wrapper)
+      const rect = wrapperRef.current.getBoundingClientRect()
+      
+      // 4. Subtract to get distance relative to the paper itself
+      return {
+        top: coords.top - rect.top,       
+        left: coords.left - rect.left,    
+        height: (coords.bottom - coords.top) || 20 
+      }
+    } catch {
+      return null
+    }
   }
 
   /*
@@ -106,26 +132,45 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
         <div className="flex-1 overflow-y-auto w-full px-6 pb-6 pt-2">
           <div className="max-w-3xl mx-auto h-full">
 
-            <div className="border theme-border modern-glow-border rounded-lg theme-bg-panel p-6 min-h-[400px] relative transition-colors duration-300">
+            <div 
+              ref={wrapperRef}
+              className="border theme-border modern-glow-border rounded-lg theme-bg-panel p-6 min-h-[400px] relative transition-colors duration-300"
+            >
 
               {editor && <CommentButton editor={editor} />}
 
               <EditorContent editor={editor} className="editor-content" />
 
-              {cursors.map(cursor => (
-                <div
-                  key={cursor.userId}
-                  className="absolute text-xs px-2 py-1 rounded pointer-events-none collaborative-cursor"
-                  style={{
-                    top: cursor.position * 2,
-                    left: 10,
-                    background: cursor.color,
-                    color: cursor.color,
-                  }}
-                >
-                  <span className="text-white drop-shadow-md">{cursor.name}</span>
-                </div>
-              ))}
+              {/* Render Remote Cursors Live */}
+              {cursors.map(cursor => {
+                const coords = getCursorCoordinates(cursor.position)
+                if (!coords) return null
+
+                return (
+                  <div
+                    key={cursor.userId}
+                    className="absolute pointer-events-none transition-all duration-100 z-10"
+                    style={{
+                      top: coords.top,
+                      left: coords.left,
+                      height: coords.height,
+                      borderLeft: `2px solid ${cursor.color}`, // Using border to act as the actual typing line
+                    }}
+                  >
+                    {/* The Beautiful Name Tag */}
+                    <div 
+                      className="absolute left-[2px] text-[10px] px-1.5 py-0.5 rounded-br-md rounded-tr-md rounded-bl-sm font-semibold text-white whitespace-nowrap shadow-sm"
+                      style={{ 
+                        backgroundColor: cursor.color, 
+                        top: -4, 
+                        transform: 'translateY(-100%)',
+                      }}
+                    >
+                      {cursor.name}
+                    </div>
+                  </div>
+                )
+              })}
 
             </div>
 
