@@ -114,9 +114,9 @@ Keyboard shortcuts supported (Ctrl+B, Ctrl+I, etc.)
 
 ### 🖱️ Live Cursor Tracking
 
-* Displays user position inside document
-* Color-coded cursor labels
-* Real-time updates on selection change
+* Precise DOM-based inline cursor tracking (Google Docs style)
+* Dynamic color-coded caret and floating name tags
+* Real-time synchronized updates via WebSockets
 
 ---
 
