@@ -65,16 +65,14 @@ export default function EditorToolbar({ editor }: Props) {
 
   const handleBulletChange = (value: string) => {
     if (editor.isActive("bulletList")) {
-      const currentStyle = editor.getAttributes("bulletList").listStyleType || "circle"
+      const currentStyle = editor.getAttributes("bulletList").listStyleType || "disc"
       if (currentStyle === value) {
         editor.chain().focus().toggleBulletList().run()
       } else {
         editor.chain().focus().updateAttributes("bulletList", { listStyleType: value }).run()
       }
     } else {
-      editor.commands.toggleBulletList()
-      editor.commands.updateAttributes("bulletList", { listStyleType: value })
-      editor.commands.focus()
+      editor.chain().focus().toggleBulletList().updateAttributes("bulletList", { listStyleType: value }).run()
     }
     setOpenDropdown(null)
   }
@@ -88,15 +86,13 @@ export default function EditorToolbar({ editor }: Props) {
         editor.chain().focus().updateAttributes("orderedList", { listStyleType: value }).run()
       }
     } else {
-      editor.commands.toggleOrderedList()
-      editor.commands.updateAttributes("orderedList", { listStyleType: value })
-      editor.commands.focus()
+      editor.chain().focus().toggleOrderedList().updateAttributes("orderedList", { listStyleType: value }).run()
     }
     setOpenDropdown(null)
   }
 
   return (
-    <div className="flex gap-2 border theme-border rounded-lg p-2 theme-bg-panel mb-3 items-center relative transition-colors duration-300" ref={dropdownRef}>
+    <div className="flex gap-2 border theme-border rounded-lg p-2 theme-bg-panel mb-3 items-center relative transition-colors duration-300 flex-wrap" ref={dropdownRef}>
       {actions.map(({ icon: Icon, action, isActive }, index) => {
         const active = isActive(editor)
         return (
@@ -146,7 +142,7 @@ export default function EditorToolbar({ editor }: Props) {
       </div>
 
       {/* Ordered List Split Button */}
-      <div className={`flex items-center rounded transition relative ${editor.isActive("orderedList") ? "theme-btn-active shadow-sm" : "theme-toolbar-btn"}`}>
+      <div className={`flex items-center rounded transition ${editor.isActive("orderedList") ? "theme-btn-active shadow-sm" : "theme-toolbar-btn"}`}>
         <button
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={`p-2 rounded-l ${editor.isActive("orderedList") ? "" : "theme-text-muted hover:theme-text-base"}`}
@@ -161,7 +157,7 @@ export default function EditorToolbar({ editor }: Props) {
         </button>
 
         {openDropdown === "ordered" && (
-          <div className="absolute top-full mt-2 left-0 theme-bg-panel border theme-border rounded shadow-lg p-1 z-10 flex gap-1">
+          <div className="absolute top-full mt-2 theme-bg-panel border theme-border rounded shadow-lg p-1 z-10 flex gap-1">
             {orderedOptions.map((opt) => (
               <button
                 key={opt.value}

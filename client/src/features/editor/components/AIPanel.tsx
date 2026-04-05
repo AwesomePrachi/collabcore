@@ -49,14 +49,14 @@ export default function AIPanel({ getContent }: Props) {
 
       <button
         onClick={summarize}
-        className="bg-blue-600 px-3 py-2 rounded theme-text-inverse modern-gradient-btn"
+        className="bg-blue-600 px-3 py-2 rounded text-white modern-gradient-btn"
       >
         Summarize
       </button>
 
       <button
         onClick={improve}
-        className="bg-purple-600 px-3 py-2 rounded theme-text-inverse modern-gradient-btn"
+        className="bg-purple-600 px-3 py-2 rounded text-white modern-gradient-btn"
       >
         Improve Writing
       </button>

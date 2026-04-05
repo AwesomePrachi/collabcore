@@ -114,9 +114,9 @@ export default function Editor({ documentId, onChangeTitle }: Props) {
       <div className="flex-1 flex flex-col overflow-hidden relative">
 
         {/* Static Toolbar Area */}
-        <div className="w-full shrink-0 px-4 md:px-6 pt-4 md:pt-6 pb-2">
-          <div className="max-w-3xl mx-auto flex items-center justify-between gap-2">
-            <div className="flex-1 overflow-x-auto no-scrollbar">
+        <div className="w-full shrink-0 px-4 md:px-6 pt-4 md:pt-6 pb-2 relative z-50">
+          <div className="max-w-3xl mx-auto flex shrink-0 items-center justify-between gap-2">
+            <div className="flex-1">
               <EditorToolbar editor={editor} />
             </div>
             <button 
