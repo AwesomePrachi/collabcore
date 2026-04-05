@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { api } from "@/lib/api"
 import { Share2 } from "lucide-react"
 
@@ -18,16 +18,30 @@ export default function DocumentPage() {
 
   const [title, setTitle] = useState("")
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (!publicId) return null
 
   const handleTitleBlur = async () => {
     if (!title.trim()) return
     try {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
       await api.patch(`/documents/${publicId}`, { title })
     } catch (error) {
       console.error("Failed to update title:", error)
     }
+  }
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value
+    setTitle(newTitle)
+    
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      if (newTitle.trim()) {
+        api.patch(`/documents/${publicId}`, { title: newTitle }).catch(console.error)
+      }
+    }, 500)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -43,7 +57,7 @@ export default function DocumentPage() {
         
         <input 
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
           onBlur={handleTitleBlur}
           onKeyDown={handleKeyDown}
           placeholder="Untitled Document"
